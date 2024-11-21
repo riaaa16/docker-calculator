@@ -10,9 +10,9 @@ services:
     volumes:
       - .:/app
     environment:
-      PYTHONDONTWRITEBYTECODE: 1
-      PYTHONUNBUFFERED: 1
-      DATABASE_URL: postgresql://postgres:postgres@db:5432/fastapi_db
+      - PYTHONDONTWRITEBYTECODE=${PYTHONDONTWRITEBYTECODE}
+      - PYTHONUNBUFFERED=${PYTHONUNBUFFERED}
+      - DATABASE_URL=${DATABASE_URL}
     command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
     depends_on:
       - db
@@ -24,9 +24,9 @@ services:
     image: postgres
     container_name: postgres_db
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: fastapi_db
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     ports:
       - "5432:5432"
     volumes:
@@ -44,8 +44,8 @@ services:
     image: dpage/pgadmin4  # Updated to a newer version
     container_name: pgadmin
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@example.com
-      PGADMIN_DEFAULT_PASSWORD: admin
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
     ports:
       - "5050:80"  # Ensure port 5050 is free or change if necessary
     volumes:
